@@ -2,18 +2,21 @@ const express = require("express");
 // const helmet = require("helmet");
 // const morgan = require("morgan");
 
-const userRouter = require("./data/user-router");
-const postRouter = require("./data/post-router");
+const userRouter = require("./routes/user-router");
+const postRouter = require("./routes/post-router");
 
 const server = express();
 
+server.use(express.json());
+
+server.use("/api/users", userRouter);
+server.use("/api/posts", postRouter);
+
 server.get("/", (req, res) => {
+  console.log(req.body);
   res.send(`
     <h2>BOOOM LOADED</h2>
     `);
 });
-
-server.use("/api/users", userRouter);
-server.use("/api/posts", postRouter);
 
 module.exports = server;

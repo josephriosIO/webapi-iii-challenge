@@ -1,6 +1,6 @@
 const express = require("express");
 
-const postDb = require("./helpers/postDb");
+const postDb = require("../data/helpers/postDb");
 
 const router = express.Router();
 
@@ -42,11 +42,9 @@ router.get("/:id", async (req, res) => {
 router.post("/", (req, res) => {
   const { text, user_id } = req.body;
   if (!text || !user_id) {
-    res
-      .status(400)
-      .json({
-        errorMessage: "Please provide title and contents for the post."
-      });
+    res.status(400).json({
+      errorMessage: "Please provide title and contents for the post."
+    });
   }
   postDb
     .insert({ text, user_id })
@@ -54,11 +52,9 @@ router.post("/", (req, res) => {
       res.status(201).json({ post });
     })
     .catch(error => {
-      res
-        .status(500)
-        .json({
-          error: "There was an error while saving the post to the database"
-        });
+      res.status(500).json({
+        error: "There was an error while saving the post to the database"
+      });
     });
 });
 
