@@ -58,4 +58,15 @@ router.post("/", (req, res) => {
     });
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { text } = req.body;
+    const updatePost = await postDb.update(id, { text });
+    res.status(200).json({ text });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
