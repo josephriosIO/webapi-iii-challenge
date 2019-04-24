@@ -43,7 +43,7 @@ router.post("/", (req, res) => {
   const { text, user_id } = req.body;
   if (!text || !user_id) {
     res.status(400).json({
-      errorMessage: "Please provide title and contents for the post."
+      errorMessage: "Please provide title and id for the post."
     });
   }
   postDb
