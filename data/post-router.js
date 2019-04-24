@@ -29,4 +29,37 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// router.post("/", async (req, res) => {
+//   try {
+//     const newPost = await postDb.insert(req.body);
+//     res.status(201).json(newPost);
+//   } catch (err) {
+//     res.status(500).json({ message: "error" });
+//   }
+// });
+
+//Create a post
+router.post("/", (req, res) => {
+  const { text, user_id } = req.body;
+  if (!text || !user_id) {
+    res
+      .status(400)
+      .json({
+        errorMessage: "Please provide title and contents for the post."
+      });
+  }
+  postDb
+    .insert({ text, user_id })
+    .then(post => {
+      res.status(201).json({ post });
+    })
+    .catch(error => {
+      res
+        .status(500)
+        .json({
+          error: "There was an error while saving the post to the database"
+        });
+    });
+});
+
 module.exports = router;

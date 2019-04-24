@@ -4,6 +4,26 @@ const userDb = require("./helpers/userDb");
 
 const router = express.Router();
 
+// Middleware
+// const nameCheck = (req, res, next) => {
+//   const { name } = req.body;
+//   if (name[0] !== name[0].toUpperCase()) {
+//     res.status(400).send("Please capitalize the first letter of your name");
+//   } else {
+//     next();
+//   }
+// };
+
+// const checkIfNameUppercased = (req, res, next) => {
+//   const { name } = req.body;
+//   if (name === name.toUpperCase(0)) {
+//     next();
+//   } else {
+//     res.status(404).send("uppercase first letter in your name!");
+//     next();
+//   }
+// };
+
 router.get("/", async (req, res) => {
   try {
     const users = await userDb.get();
@@ -41,6 +61,35 @@ router.get("/posts/:userId", async (req, res) => {
   } catch (err) {
     res.status(500).json("gsg");
   }
+});
+
+// router.post("/", nameCheck, async (req, res) => {
+//   try {
+//     const user = req.body;
+//
+//     // const postUser = await userDb.insert(user);
+//     const postUser = await userDb.insert(user);
+//     res.status(201).json(postUser);
+//   } catch (err) {
+//     res.status(500).json("database errors");
+//   }
+// });
+
+router.post("/", (req, res) => {
+  console.log(req.body);
+
+  // userDb
+  //   .insert(req.body)
+  //   .then(user => {
+  //     res.status(201).json({ user });
+  //   })
+  //   .catch(error => {
+  //     res.status(500).json({ error: "There was an error creating the user" });
+  // });
+});
+
+router.put("/:id", (req, res) => {
+  console.log(req.body);
 });
 
 module.exports = router;
